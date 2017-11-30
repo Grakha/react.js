@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React</title>
+	<script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
+	<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
+	<script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+	<script src="https://npmcdn.com/jquery@3.1.0/dist/jquery.min.js"></script>
+	<script src="https://npmcdn.com/remarkable@1.6.2/dist/remarkable.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="style/style.css"/>
+</head>
+<body>
+	<div id="content"></div>
+
+	<script type="text/babel">
+
+		class TotalPrice extends React.Component {
+			constructor() {
+				super();
+			}
+
+			render() {
+				// console.log(this.props.sum);
+				let total = this.props.sum;
+				return <p className="totalPrice">Total price of products from table: {total}</p>;
+			}
+		}
+
+		class NewProduct extends React.Component {
+			constructor() {
+				super();
+			}
+
+			render() {
+				return <div className="productForm">
+					<p>Please add a new product</p>
+					<label>Name</label>
+					<input type="text" placeholder="Name of Product" value={this.props.valueName.replace(/[^a-zA-Z]+/g, '')} name="valueName" onChange={this.props.handleChangeInput.bind(null)} />
+					<label>Cost</label>
+					<input type="text" placeholder="Cost Product" value={this.props.valueCost.replace(/[^0-9\.]/g, '')} name="valueCost" onChange={this.props.handleChangeInput.bind(null)} />
+					<label>Quantity</label>
+					<input type="text" placeholder="Quantity Product" value={this.props.valueAmount.replace(/[^0-9\.]/g, '')} name="valueAmount" onChange={this.props.handleChangeInput.bind(null)} />
+					<input type="button" value="Include new Product" onClick={this.props.handleAddProduct.bind(null)} />
+				</div>;
+			}
+		}
+
+		class Table extends React.Component {
+			constructor() {
+				super();
+			}
+
+			render() {
+					let checkSum = <input type="checkbox" checked={this.props.check} onChange={this.props.handleCheckbox.bind(null, this.props.index)}/>;
+					const nameUpLetter = this.props.name.charAt(0).toUpperCase() + this.props.name.slice(1);
+					const putOut = (parseFloat(this.props.cost) * parseFloat(this.props.amount)).toFixed(2);
+					let buttonRm = <input type="button" value="Remove" onClick={this.props.handleRemove.bind(null, this.props.index) } />;
+
+				return <tr>
+					<td>{checkSum}</td>
+					<td>{nameUpLetter}</td>
+					<td>{this.props.cost}</td>
+					<td>{this.props.amount}</td>
+					<td>{putOut}</td>
+					<td>{buttonRm}</td>
+				</tr>;
+			}
+		}
+
+		class App extends React.Component {
+				constructor() {
+					super();
+					this.state = {
+						products: [
+							{ name: 'bread', cost: '2.5', amount: '250', check: true },
+							{ name: 'chocolate', cost: '7.35', amount:' 50', check: true },
+							{ name: 'milk', cost: '4.80', amount: '180', check: true },
+							{ name: 'chips', cost: '5', amount: '300', check: true }
+						],
+						valueName: "",
+						valueCost: "",
+						valueAmount: ""
+					};
+				}
+
+				handleRemove(index) {
+					this.state.products.splice(index, 1);
+					this.setState({products: this.state.products});
+				}
+
+				handleChangeInput(event) {
+					this.setState({[event.target.name]: event.target.value});
+				}
+
+				handleAddProduct() {
+					let oneProduct = {name: this.state.valueName, cost: this.state.valueCost, amount: this.state.valueAmount, check: true};
+
+					if((this.state.valueName && this.state.valueCost && this.state.valueAmount ) != '') {
+							this.state.products.push(oneProduct);
+							this.setState({products: this.state.products});
+					}
+				}
+
+				handleCheckbox(index, event) {
+					this.state.products[index]['check'] = !this.state.products[index]['check'];
+					this.setState({products: this.state.products});
+
+					console.log(this.state.products);
+
+				}
+
+				render() {
+
+					const items = this.state.products.map((item, index) => {
+							return <Table
+												key={index}
+												index={index}
+												name={item.name}
+												cost={item.cost}
+												amount={item.amount}
+												check={item.check}
+												handleRemove={this.handleRemove.bind(this)}
+												handleCheckbox={this.handleCheckbox.bind(this, )} />;
+					});
+
+					let sum = 0;
+					const total = this.state.products.map((item, index) => {
+						if(item.check) return  sum += parseFloat(item.amount);
+					});
+
+					return <div id="container">
+						<table id="products">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Name</th>
+								<th>Cost</th>
+								<th>Quantity</th>
+								<th>Sum</th>
+								<th>Remove Product</th>
+							</tr>
+						</thead>
+						<tbody>
+							{items}
+						</tbody>
+					</table>
+					<TotalPrice sum={sum}/>
+					<NewProduct
+									valueName={this.state.valueName}
+									valueCost={this.state.valueCost}
+									valueAmount={this.state.valueAmount}
+									handleChangeInput={this.handleChangeInput.bind(this)}
+									handleAddProduct={this.handleAddProduct.bind(this)} />
+				</div>;
+				}
+		}
+
+		ReactDOM.render(
+			<App />,
+			document.getElementById('content')
+		);
+
+	</script>
+
+</body>
+</html>

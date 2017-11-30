@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React</title>
+	<script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
+	<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
+	<script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+	<script src="https://npmcdn.com/jquery@3.1.0/dist/jquery.min.js"></script>
+	<script src="https://npmcdn.com/remarkable@1.6.2/dist/remarkable.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="style/selectDays.css"/>
+</head>
+<body>
+	<div id="content"></div>
+
+	<script type="text/babel">
+
+		class AddComment extends React.Component {
+			constructor() {
+				super();
+				this.state = {
+					value: 0,
+					valueOne: '',
+					languages: ['English', 'Russian'],
+					russian: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
+					english: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+				};
+			}
+
+			handleChangeSelectLang(event) {
+				let changeVal = this.state.valueOne;
+				this.setState({value: event.target.value});
+				this.setState({valueOne:  changeVal = 0 });
+
+			}
+
+			handleChangeSelectDays(event) {
+				this.setState({valueOne: event.target.valueOne});
+			}
+
+
+
+			render() {
+
+				const langs = this.state.languages.map((lang, index) => {
+					return <option key={index} value={index}>{lang}</option>;
+				});
+
+				const ruDays = this.state.russian.map((day, index) => {
+					return <option key={index} value={day}>{day}</option>;
+				});
+
+				const enDays = this.state.english.map((day, index) => {
+					return <option key={index} value={day}>{day}</option>;
+				});
+
+				return <div className="items">
+					<select className="langs" value={this.state.value} onChange={this.handleChangeSelectLang.bind(this)}>
+						{langs}
+					</select>
+					<select className="daysOfWeeks" value={this.state.valueOne} onChange={this.handleChangeSelectDays.bind(this)}>
+						{(this.state.value == 0) ? enDays : ruDays }
+					</select>
+				</div>;
+
+			}
+		}
+
+		ReactDOM.render(
+			<AddComment />,
+			document.getElementById("content")
+		);
+
+	</script>
+
+	<div style="margin-top: 200px;">
+		<p>I am a Front-End Web Developer skilled in HTML, CSS and JavaScript. Even though I am not that experienced, you can be certain that I will do anything possible to deliver the project on time and solve all the problems I encounter during development, even if it requires doing something I have not learned yet (That is the best way of learning anyway!).
+
+I like to be as honest as possible to my client and believe it is the quickest and smartest way to solve problems and unsderstand what we expect from each other. I am looking forward to work for you.</p>
+		<h1>9 привычек, которые развивают мощнейшую мотивацию</h1>
+		<h3>1. Ранний подъем</h3>
+		<p>
+			Все успешные люди — ранние пташки. Что-то особенное и магическое есть в раннем подъеме. Эта часть дня, когда еще мир не проснулся, — самая важная и вдохновляющая. Те, кто встает до рассвета, утверждают, что их жизнь стала полноценной. Попробуйте и вы вставать рано, и уже через месяц-другой будете с жалостью вспоминать то время, когда рассвет встречали в постели.
+		</p>
+		<h3>2. Увлеченное чтение</h3>
+		<p>
+			Если в день заменить час сидения перед телевизором или компьютером на чтение полезной и интересной книги, то вы станете самым умным человеком среди своего окружения. Вы будете быстрее находить ответы на вопросы, с вами будет интереснее общаться, многое будет получаться само собой. Как сказал Марк Твен: «Человек, который не читает хороших книг, не имеет преимуществ перед человеком, который не умеет читать».
+		</p>
+		<h3>3. Умение упрощать</h3>
+		<p>
+			Упрощение — это устранение ненужного и бесполезного. Необходимо уметь упрощать все, что можно и нужно упростить. Хоть это и требует долгой практики, в итоге дает положительный результат. Очищаются память и чувства, вы меньше переживаете и нервничаете. Чем будет проще ваша жизнь, тем больше вы сможете ею наслаждаться.
+		</p>
+		<h3>4. Замедление</h3>
+		<p>
+			Наслаждаться жизнью в постоянном стрессе и хаосе невозможно. Найдите для себя тихое время, остановитесь, прислушайтесь к себе и своему внутреннему голосу. Обратите внимание на все, что имеет для вас значение.
+			<br/>
+			Возьмите за привычку просыпаться рано, когда вокруг тишина, чтобы медитировать, размышлять, созидать. Замедлите темп жизни, и тогда все, за чем вы гнались, само догонит вас.
+		</p>
+		<h3>5. Тренируйтесь</h3>
+		<p>
+			Регулярная активность сохраняет здоровье. Если у вас сейчас нет времени на тренировки, рано или поздно вы все равно начнете их делать, чтобы поддерживать свое здоровье. Спортом можно заниматься не только в тренажерных залах, но и дома.
+		</p>
+		<h3>6. Ежедневная практика</h3>
+		<p>
+			Чем больше человек практикуется, тем удачливее он становится. Ведь удача — это то место, где практика встречается с возможностями. Без практики тяжело выразить свой талант. Поэтому, практикуясь, вы получаете возможность показать то, на что способны.
+		</p>
+		<h3>7. Окружение</h3>
+		<p>
+			Именно эта привычка способна ускорить ваш успех. Окружите себя позитивными, энергичными людьми. Они — самая лучшая поддержка, мотивация и полезные советы. В часы депрессии общение со своими друзьями способно поднять вас на ноги.
+		</p>
+		<h3>8. Заведите журнал благодарностей</h3>
+		<p>
+			Эта привычка способна творить чудеса. Поблагодарите за все, что у вас есть, и стремитесь к лучшему. Благодарность способствует появлению новых поводов для радости. Перед сном записывайте по одной вещи, за которую вы благодарны. Чудеса не заставят себя ждать!
+		</p>
+		<h3>9. Будьте упорны</h3>
+		<p>
+			Эдисон сделал 10000 неудачных попыток, прежде чем изобрел электрическую лампочку. Уолту Диснею для основания Диснейленда пришлось выслушать 303 отказа от различных банков, прежде чем он добился желаемого. 134 издателя отклонили книгу Дж. Кэнфилда и Марка В. Хансена «Куриный бульон для души», прежде чем она стала мировым бестселлером.
+		</p>
+	</div>
+</body>
+</html>

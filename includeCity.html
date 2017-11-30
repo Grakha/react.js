@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React</title>
+	<script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
+	<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
+	<script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+	<script src="https://npmcdn.com/jquery@3.1.0/dist/jquery.min.js"></script>
+	<script src="https://npmcdn.com/remarkable@1.6.2/dist/remarkable.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="style/includeCity.css"/>
+</head>
+<body>
+	<div id="content"></div>
+
+	<script type="text/babel">
+
+		class AddComment extends React.Component {
+			constructor() {
+				super();
+				this.state = {
+					valueInput: '',
+					valueSelect: 0,
+					cities: []
+				};
+			}
+
+			handleInputChange(event) {
+				this.setState({valueInput: event.target.value});
+			}
+
+			handleSelectChange(event) {
+				this.setState({valueSelect: event.target.value});
+			}
+
+			handleIncludeCity() {
+				if(this.state.valueInput == '') return;
+				this.state.cities.push(this.state.valueInput);
+				this.setState({valueSelect: this.state.cities});
+				this.setState({valueInput: ''});
+			}
+
+			render() {
+
+				const options = this.state.cities.map((option, index) => {
+					return <option key={index} value={index}>{option}</option>;
+				});
+
+				return <div>
+						<p className="outputCity">City: {this.state.cities[this.state.valueSelect] || this.state.cities[this.state.valueSelect = 0]}</p>
+						<input type="text" className="inputCity" placeholder="Include City" value={this.state.valueInput} onChange={this.handleInputChange.bind(this)}/>
+						<select id="selectCity" value={this.state.valueSelect} onChange={this.handleSelectChange.bind(this)}>
+							{options}
+						</select>
+						<button type="button" className="includeCity" onClick={this.handleIncludeCity.bind(this)}>Include New City</button>
+				</div>;
+
+			}
+		}
+
+		ReactDOM.render(
+			<AddComment />,
+			document.getElementById("content")
+		);
+
+	</script>
+
+</body>
+</html>

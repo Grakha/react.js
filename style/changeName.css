@@ -1,0 +1,44 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  padding: 20px 10px 0;
+  text-align: center;
+  list-style: none;
+}
+.grid li div {
+  margin-top: 10px;
+}
+.grid li span {
+  display: block;
+  color: #333;
+  font: 800 18px/22px Arial sans-serif;
+}
+.grid li div input {
+  padding: 6px 7px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+}
+.grid li div a {
+  position: relative;
+  display: inline-block;
+  padding: 5px 12px;
+  font: 900 18px/22px Arial sans-serif;
+  color: #ffffff;
+  border: none;
+  background-color: #00aff0;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.grid li div a:after {
+  content: '';
+  position: absolute;
+  left: 10%;
+  bottom: 0;
+  width: 80%;
+  height: 10px;
+  box-shadow: 0 0px 26px #00aff0;
+  z-index: -1;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React</title>
+	<script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
+	<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
+	<script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+	<script src="https://npmcdn.com/jquery@3.1.0/dist/jquery.min.js"></script>
+	<script src="https://npmcdn.com/remarkable@1.6.2/dist/remarkable.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="style/changeName.css"/>
+</head>
+<body>
+	<div id="content"></div>
+
+	<script type="text/babel">
+
+		class User extends React.Component {
+			constructor() {
+				super();
+			}
+
+			render() {
+					var input = <input type="text"
+															value={this.props.name}
+															onChange={this.props.handleChange.bind(null, this.props.index)}
+															onBlur={this.props.handleBlur.bind(null, this.props.index)} />;
+					var link = <a href="#"
+												onClick={this.props.changeText.bind(null, this.props.index)}>Change Me</a>;
+
+				return <li>
+						<span>Name: {this.props.name}</span>
+						<div>{this.props.edit ? input : link}</div>
+					</li>;
+			}
+		}
+
+		class App extends React.Component {
+				constructor() {
+					super();
+					this.state = {
+						users: [
+							{name: 'Gora', edit: false},
+							{name: 'Andrew', edit: false},
+							{name: 'Jack', edit: false}
+						]
+					};
+				}
+
+				handleChange(index, event) {
+					const user = this.state.users;
+								user[index]['name'] = event.target.value;
+								this.setState({users: user});
+				}
+
+				changeText(index) {
+					const user = this.state.users;
+								user[index]['edit'] = !user[index]['edit'];
+								this.setState({users: user});
+				}
+
+				handleBlur(index) {
+					const user = this.state.users;
+								user[index]['edit'] = !user[index]['edit'];
+								this.setState({users: user});
+				}
+
+				render() {
+
+					const names = this.state.users.map((user, index) => {
+						return <User
+												key={index}
+												name={user.name}
+												index={index}
+												handleChange={this.handleChange.bind(this)}
+												changeText={this.changeText.bind(this)}
+												handleBlur={this.handleBlur.bind(this)}
+												edit={user.edit} />;
+					});
+
+					return <ul className="grid">
+						{names}
+					</ul>;
+				}
+		}
+
+		ReactDOM.render(
+			<App />,
+			document.getElementById('content')
+		);
+
+	</script>
+
+</body>
+</html>

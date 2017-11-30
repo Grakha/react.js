@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React</title>
+	<script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
+	<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
+	<script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+	<script src="https://npmcdn.com/jquery@3.1.0/dist/jquery.min.js"></script>
+	<script src="https://npmcdn.com/remarkable@1.6.2/dist/remarkable.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="style/answerQuestion.css"/>
+</head>
+<body>
+	<div id="content"></div>
+
+	<script type="text/babel">
+
+		class AddComment extends React.Component {
+			constructor() {
+				super();
+				this.state = {
+					test: [
+						{
+							question: 'Which of the following code snippets when inserted into CSS will change the A and B div’s color from red to blue?',
+							answers: [
+								'In style rule add this code “#sectors > div:not(.C):not(.D):not(.E) {background-color: blue;}”',
+								'In style rule add this code “#sectors > div:not(.C, .D, .E) {background-color: blue;}',
+								'Both A and B',
+								'None of the above'
+							],
+							right: 1, //номер правильного ответа
+						},
+						{
+							question: 'Which of the following will create a triangle effect using pure CSS3 on a white background, without making use of background images?',
+							answers: [
+								'It is not possible to do so.',
+								'border-color: #a0c7ff #ffffff #ffffff #ffffff; border-style: solid; border-width: 20px; width: 0px; height: 0px;',
+								'background-color: #a0c7ff #ffffff #ffffff #ffffff; border-style: solid; border-width: 20px; width: 0px; height: 0px;',
+								'background-color: #a0c7ff #ffffff #ffffff #ffffff; border-style: solid; border-width: 1px; width: 10px; height: 10px;'
+							],
+							right: 2, //номер правильного ответа
+						},
+						{
+							question: 'Can a percentage value be given in a ruby-align property?',
+							answers: [
+								'Yes',
+								'No',
+							],
+							right: 2, //номер правильного ответа
+						},
+						{
+							question: 'Which of the following is not a valid page break?',
+							answers: [
+								'page-break-inside',
+								'page-break-outside',
+								'page-break-before',
+								'page-break-after',
+								'None of these'
+							],
+							right: 2, //номер правильного ответа
+						},
+						{
+							question: 'The min-width property cannot be applied to the following element:',
+							answers: [
+								'button',
+								'span',
+								'table row'
+							],
+							right: 3, //номер правильного ответа
+						}
+					]
+				};
+			}
+
+			handleRadioChange(index, event) {
+				this.state.test[index].answer = event.target.value;
+				this.setState({test: this.state.test});
+			}
+
+			render() {
+
+
+				const  items = this.state.test.map((item, index) => {
+						var css = '';
+						if(item.right - 1 == item.answer) {
+							css = 'green';
+						} else if (!item.answer) {
+							css = 'black';
+						} else if(item.right - 1 != item.answer) {
+							css = 'red';
+						}
+
+						let answers = item.answers.map((answer, indexAns) => {
+								return <div className="answer" key={indexAns}>
+									<label><input
+												name={'answer'+index}
+												type="radio"
+												value={indexAns}
+												checked={this.state.test[index].answer == indexAns}
+												onChange={this.handleRadioChange.bind(this, index)}
+											/>{answer}</label>
+								</div>;
+						 });
+
+						 return <div className="tests" key={index}>
+						 		<h3 style={{color: css}}>{item.question}</h3>
+								{answers}
+						 </div>
+
+				});
+
+				return <div className="wrap">
+					<h2 className="theame">CSS Test 2017</h2>
+					{items}
+				</div>;
+
+			}
+		}
+
+		ReactDOM.render(
+			<AddComment />,
+			document.getElementById("content")
+		);
+
+	</script>
+
+</body>
+</html>

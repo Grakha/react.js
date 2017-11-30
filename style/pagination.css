@@ -1,0 +1,147 @@
+table.workTable {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+table.workTable tr:nth-of-type(odd) {
+  background-color: #eee;
+}
+table.workTable th {
+  background: #333;
+  color: white;
+  font-weight: bold;
+}
+table.workTable td,
+table.workTable th {
+  padding: 6px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+  table.workTable,
+  table.workTable thead,
+  table.workTable tbody,
+  table.workTable th,
+  table.workTable td,
+  table.workTable tr {
+    display: block;
+  }
+
+  table.workTable thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  table.workTable tr {
+    border: 1px solid #ccc;
+  }
+  table.workTable td {
+    position: relative;
+    padding-left: 50%;
+    border-bottom: 1px solid #eee;
+    border: none;
+  }
+  table.workTable td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  table.workTable td:nth-of-type(1):before { content: "Name"; }
+  table.workTable td:nth-of-type(2):before { content: "Surname"; }
+  table.workTable td:nth-of-type(3):before { content: "Salary"; }
+  table.workTable td:nth-of-type(4):before { content: "Sex"; }
+}
+form#includeWorkers {
+  margin-top: 20px;
+}
+form#includeWorkers p {
+  margin-left: 30px;
+  margin-top: 10px;
+}
+input.item_input {
+  display: block;
+  width: 250px;
+  height: 30px;
+  margin: 5px 0 0 25px;
+  padding: 5px;
+  border-radius: 7px;
+  border: 1px solid #ccc;
+}
+input.item_input:focus {
+  outline: none;
+}
+select#selectGender:focus {
+  outline: none;
+}
+select#selectGender {
+  display: block;
+  width: 100px;
+  height: 25px;
+  margin-top: 5px;
+  margin-left: 25px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font: 16px/20px Arial sans-serif;
+}
+form#includeWorkers button {
+  padding: 10px 7px;
+  margin-top: 20px;
+  margin-left: 110px;
+  border: 1px solid #ccc;
+  background-color: #00aff0;
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px #ccc;
+  color: #fff;
+  font: 18px Arial sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+}
+form#includeWorkers button:active {
+  box-shadow: none;
+}
+form#includeWorkers button:focus {
+  outline: none;
+}
+.errorFill {
+  color: red;
+  display: none;
+}
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+.pagination>li {
+    display: inline;
+}
+.pagination>li:first-child>a,
+.pagination>li:first-child>span {
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.pagination>li>a,
+.pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.pagination>li:last-child>a, .pagination>li:last-child>span {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}

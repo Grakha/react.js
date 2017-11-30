@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React</title>
+	<script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
+	<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
+	<script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+	<script src="https://npmcdn.com/jquery@3.1.0/dist/jquery.min.js"></script>
+	<script src="https://npmcdn.com/remarkable@1.6.2/dist/remarkable.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="style/style.css"/>
+</head>
+<body>
+	<div id="content"></div>
+
+	<script type="text/babel">
+
+		class AddComment extends React.Component {
+			constructor() {
+				super();
+				this.state = {
+					valueInput: '',
+					valueSelectOne: 0,
+					valueSelectTwo: 0,
+					currency: ['USD', 'EUR', 'GBP', 'UAH'],
+					amount: [{'USD': 1, 'EUR': 0.86, 'GBP': 0.76, 'UAH': 26.95}],
+					result: ''
+				};
+			}
+
+			handleInputChange(event) {
+				this.setState({valueInput: event.target.value.replace(/[^0-9\.]/g, '')});
+			}
+
+			handleSelectChange(event) {
+				this.setState({[event.target.name]: event.target.value});
+			}
+
+			handleIncludeCity(event) {
+				event.preventDefault();
+
+				const valOne = this.state.currency[this.state.valueSelectOne];
+				const valTwo = this.state.currency[this.state.valueSelectTwo];
+
+				if(this.state.valueInput == '') return;
+				this.state.result = (parseFloat(this.state.valueInput) * parseFloat(this.state.amount[0][valTwo]) / parseFloat(this.state.amount[0][valOne])).toFixed(2);
+
+				this.setState({result: this.state.result});
+				this.setState({valueInput: ''});
+				// this.setState({valueSelect: this.state.currency});
+				// input summ * what I need know currency / from currency
+			}
+
+			render() {
+
+				const options = this.state.currency.map((option, index) => {
+					return <option key={index} value={index}>{option}</option>;
+				});
+
+				return <div className="wrap">
+						<select id="selectCity" value={this.state.valueSelectOne} name="valueSelectOne" onChange={this.handleSelectChange.bind(this)}>
+							{options}
+						</select>
+						<input type="text" className="inputCity" placeholder="Include City" value={this.state.valueInput} onChange={this.handleInputChange.bind(this)}/>
+						<button type="button" className="includeCity" onClick={this.handleIncludeCity.bind(this)}>&#10227;</button>
+						<select id="selectCity" value={this.state.valueSelectTwo} name="valueSelectTwo" onChange={this.handleSelectChange.bind(this)}>
+							{options}
+						</select>
+						<p className="resultCount">Result: &nbsp;&nbsp;{this.state.result}</p>
+				</div>;
+
+			}
+		}
+
+		ReactDOM.render(
+			<AddComment />,
+			document.getElementById("content")
+		);
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+.items {
+  padding: 30px 0 0 30px;
+}
+select.langs,
+select.daysOfWeeks {
+  width: 200px;
+  height: 30px;
+  border-radius: 3px;
+  border-color: #ccc;
+}
+select.daysOfWeeks {
+  margin-left: 30px;
+}
